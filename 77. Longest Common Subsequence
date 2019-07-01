@@ -1,0 +1,49 @@
+Given two strings, find the longest common subsequence (LCS).
+
+Your code should return the length of LCS.
+
+Example
+Example 1:
+	Input:  "ABCD" and "EDCA"
+	Output:  1
+	
+	Explanation:
+	LCS is 'A' or  'D' or 'C'
+
+
+Example 2:
+	Input: "ABCD" and "EACB"
+	Output:  2
+	
+	Explanation: 
+	LCS is "AC"
+  
+  #DP
+  class Solution {
+public:
+    /**
+     * @param A: A string
+     * @param B: A string
+     * @return: The length of longest common subsequence of A and B
+     */
+    int longestCommonSubsequence(string &A, string &B) {
+        // write your code here
+        int size1 = A.size();
+        int size2 = B.size();
+        vector<vector<int>> res (size2 + 1, vector<int> (size1 + 1)); 
+        
+        for(int i = 0; i<= size1; ++i){
+            res[0][i] = 0;
+        }
+        for(int i = 0; i<= size1; ++i){
+            res[i][0] = 0;
+        }
+        for(int i = 1; i<= size2; ++i){
+            for(int j = 1; j<= size1; ++j){
+                if(B[i-1] == A[j-1]) res[i][j] = res[i-1][j-1]+1;
+                else res[i][j] = max(res[i-1][j],res[i][j-1]);
+            }
+        }
+        return res[size2][size1];
+    }
+};
