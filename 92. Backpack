@@ -1,0 +1,25 @@
+#Given n items with size Ai, an integer m denotes the size of a backpack. How full you can fill this backpack?
+#只看重量，最满你能装多满
+class Solution {
+public:
+    /**
+     * @param m: An integer m denotes the size of a backpack
+     * @param A: Given n items with size A[i]
+     * @return: The maximum size
+     */
+    int backPack(int m, vector<int> &A) {
+        // write your code here
+        int size = A.size();
+        if(size == 0 || m == 0) return 0;
+        vector<vector<int>> dp (size + 1, vector<int> (m + 1, 0)); 
+        for(int i = 1; i <= size; ++i) {
+            for( int j = 1; j <= m; ++j) {
+                dp[i][j] = dp[i-1][j];
+                if(j-A[i-1] >= 0) {
+                    dp[i][j] = max(A[i-1] + dp[i-1][j-A[i-1]], dp[i-1][j]);
+                }
+            }
+        }
+        return dp[size][m];
+    }
+};
