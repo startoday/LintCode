@@ -18,8 +18,9 @@ Example 2:
 	Explanation: 
 	LCS is "AC"
   
-  #DP
-  class Solution {
+#DP-bottom up
+
+class Solution {
 public:
     /**
      * @param A: A string
@@ -45,5 +46,38 @@ public:
             }
         }
         return res[size2][size1];
+    }
+};
+
+
+#DP-top down
+class Solution {
+public:
+    /**
+     * @param A: A string
+     * @param B: A string
+     * @return: The length of longest common subsequence of A and B
+     */
+    int longestCommonSubsequence(string &A, string &B) {
+        // write your code here
+        int size1 = A.size();
+        int size2 = B.size();
+        vector<vector<int>> res (size2 + 1, vector<int> (size1 + 1, -1)); 
+        
+        for(int i = 0; i<= size1; ++i){
+            res[0][i] = 0;
+        }
+        for(int i = 0; i<= size2; ++i){
+            res[i][0] = 0;
+        }
+        
+        return helper(A, B ,size1,size2,res);
+    }
+    int helper(string &A, string &B, int i,int j, vector<vector<int>> & dp ){
+        if (dp[i][j] != -1) return dp[i][j];
+        else if (A[i-1] == B[j-1]) dp[i][j] = 1 + helper(A, B, i - 1, j - 1, dp );
+        else dp[i][j] = max(helper(A, B, i, j - 1, dp ),
+        helper(A, B, i - 1, j, dp ));
+        return dp[i][j];
     }
 };
