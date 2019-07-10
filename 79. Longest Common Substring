@@ -1,0 +1,49 @@
+#substring 和subsequence的区别是 subsequence可以不连续，substring必须是连续的
+#想法就是相等是前点+1，不相等时置零
+Given two strings, find the longest common substring.
+
+Return the length of it.
+
+Example
+Example 1:
+	Input:  "ABCD" and "CBCE"
+	Output:  2
+	
+	Explanation:
+	Longest common substring is "BC"
+
+
+Example 2:
+	Input: "ABCD" and "EACB"
+	Output:  1
+	
+	Explanation: 
+	Longest common substring is 'A' or 'C' or 'B'
+
+class Solution {
+public:
+    /**
+     * @param A: A string
+     * @param B: A string
+     * @return: the length of the longest common substring.
+     */
+    int longestCommonSubstring(string &A, string &B) {
+        // write your code here
+        int sizeA = A.size();
+        int sizeB = B.size();
+        if(sizeA == 0 || sizeB == 0) return 0;
+        
+        vector<vector<int>> dp (sizeA + 1, vector<int> (sizeB + 1, 0));
+        int res = 0;
+        for(int i = 1; i <= sizeA; ++i) {
+            for(int j = 1; j <= sizeB; ++j) {
+                if(A[i-1] == B[j-1]) {
+                    dp[i][j] = 1 + dp[i-1][j-1];
+                    res = max(res, dp[i][j]);
+                } else dp[i][j] = 0;
+            }
+        }
+        
+        return res;
+    }
+};
