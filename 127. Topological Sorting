@@ -1,0 +1,10 @@
+Given an directed graph, a topological order of the graph nodes is defined as follow:
+
+For each directed edge A -> B in graph, A must before B in the order list.
+The first node in the order can be any node in the graph with no nodes direct to it.
+Find any topological order for the given graph.
+
+#拓扑排序，排序入度为0的 消除哈， 一般是有向无环图 BFS哈 
+#O（N） 没有重复点
+
+
