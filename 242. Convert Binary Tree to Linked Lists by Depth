@@ -1,0 +1,44 @@
+Given a binary tree, design an algorithm which creates a linked list of all the nodes at each depth (e.g., if you have a tree with depth D, you'll have D linked lists).
+
+Example
+Example 1:
+
+Input: {1,2,3,4}
+Output: [1->null,2->3->null,4->null]
+Explanation: 
+        1
+       / \
+      2   3
+     /
+    4
+
+
+class Solution {
+public:
+    /**
+     * @param root the root of binary tree
+     * @return a lists of linked list
+     */
+    vector<ListNode*> binaryTreeToLists(TreeNode* root) {
+        // Write your code here
+        vector<ListNode*> res;
+        if(!root) return res;
+        queue<TreeNode * > q;
+        q.push(root);
+        while(!q.empty()) {
+            ListNode * duHead = new ListNode(-1);
+            ListNode * head = duHead;
+            for(int i = q.size(); i > 0; --i) {
+                TreeNode * t = q.front();
+                q.pop();
+                ListNode * aNode = new ListNode(t->val);
+                if(t->left) q.push(t->left);
+                if(t->right) q.push(t->right);
+                head->next = aNode;
+                head = head->next;
+            }
+            res.push_back(duHead->next);
+        }
+        return res;
+    }
+};
